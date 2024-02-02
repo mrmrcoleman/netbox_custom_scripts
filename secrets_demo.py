@@ -13,8 +13,8 @@ class NewBranchScript(Script):
         name = "Display ENV VARs"
         description = "Display ENV VARs"
 
-    site_name = StringVar(
-        description="Name of the new site"
+    env_var = StringVar(
+        description="Name ENV VAR"
     )
     switch_count = IntegerVar(
         description="Number of access switches to create"
@@ -47,77 +47,6 @@ class NewBranchScript(Script):
 
     def run(self, data, commit):
 
-        # Create the new site
-        site = Site(
-            name=data['site_name'],
-            slug=slugify(data['site_name']),
-            status=SiteStatusChoices.STATUS_PLANNED
-        )
-        site.save()
-        self.log_success(f"Created new site: {site}")
+        self.log_success(f"Looking for ENV VAR: {env_var}")
 
-        # Create access switches
-        switch_role = DeviceRole.objects.get(name='Access Switch')
-        for i in range(1, data['switch_count'] + 1):
-            switch = Device(
-                device_type=data['switch_model'],
-                name=f'{site.slug.upper()}-SW-{i}',
-                site=site,
-                status=DeviceStatusChoices.STATUS_PLANNED,
-                device_role=switch_role
-            )
-            switch.save()
-            self.log_success(f"Created new switch: {switch}")
-
-        # Create routers
-        router_role = DeviceRole.objects.get(name='WAN Router')
-        for i in range(1, data['router_count'] + 1):
-            router = Device(
-                device_type=data['router_model'],
-                name=f'{site.slug.upper()}-RTR-{i}',
-                site=site,
-                status=DeviceStatusChoices.STATUS_PLANNED,
-                device_role=router_role
-            )
-            router.save()
-            self.log_success(f"Created new router: {router}")
-
-        # Create APs
-        ap_role = DeviceRole.objects.get(name='Wireless AP')
-        for i in range(1, data['ap_count'] + 1):
-            ap = Device(
-                device_type=data['ap_model'],
-                name=f'{site.slug.upper()}-AP-{i}',
-                site=site,
-                status=DeviceStatusChoices.STATUS_PLANNED,
-                device_role=ap_role
-            )
-            ap.save()
-            self.log_success(f"Created new AP: {router}")
-        
-        # Create Servers
-        server_role = DeviceRole.objects.get(name='vSphere')
-        for i in range(1, data['server_count'] + 1):
-            server = Device(
-                device_type=data['server_model'],
-                name=f'{site.slug.upper()}-VSP-{i}',
-                site=site,
-                status=DeviceStatusChoices.STATUS_PLANNED,
-                device_role=server_role
-            )
-            server.save()
-            self.log_success(f"Created new server: {router}")
-
-        # Generate a CSV table of new devices
-        output = [
-            'name,make,model'
-        ]
-        for device in Device.objects.filter(site=site):
-            attrs = [
-                device.name,
-                device.device_type.manufacturer.name,
-                device.device_type.model
-            ]
-            output.append(','.join(attrs))
-
-        return '\n'.join(output)
+        return '\n'.join(env_var)
