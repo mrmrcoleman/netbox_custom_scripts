@@ -25,7 +25,7 @@ class NewBranchScript(Script):
         #else:
         #    self.log_success(f"Found ENV VAR: TEST. Value: {value}")
 
-        value = os.system('env')
-        self.log_success(f"Output of 'env': {value}")
+        for name, value in os.environ.items():
+            self.log_success("{0}: {1}".format(name, value))
 
-        return value
+        return '\n'.join(os.environ.items())
