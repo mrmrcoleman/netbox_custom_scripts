@@ -10,8 +10,8 @@ import os
 class NewBranchScript(Script):
 
     class Meta:
-        name = "New Branch"
-        description = "Provision a new branch site"
+        name = "Display ENV VARs"
+        description = "Display ENV VARs"
 
     site_name = StringVar(
         description="Name of the new site"
