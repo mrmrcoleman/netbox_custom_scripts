@@ -28,4 +28,4 @@ class NewBranchScript(Script):
         for name, value in os.environ.items():
             self.log_success("{0}: {1}".format(name, value))
 
-        return '\n'.join(os.environ.items())
+        return
