@@ -47,6 +47,10 @@ class NewBranchScript(Script):
 
     def run(self, data, commit):
 
-        self.log_success(f"Looking for ENV VAR: {env_var}")
+        value = os.getenv('TEST')
+        if value == None:
+            self.log_success(f"Couldn't find ENV VAR: TEST")
+        else:
+            self.log_success(f"Found ENV VAR: TEST. Value: {value}")
 
-        return '\n'.join(env_var)
+        return '\n'.join(value)
