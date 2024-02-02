@@ -13,10 +13,6 @@ class NewBranchScript(Script):
         name = "Display ENV VARs"
         description = "Display ENV VARs"
 
-    env_var = StringVar(
-        description="Name ENV VAR"
-    )
-
     def run(self, data, commit):
 
         #value = os.getenv('TEST')
