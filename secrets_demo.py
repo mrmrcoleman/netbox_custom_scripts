@@ -53,4 +53,4 @@ class NewBranchScript(Script):
         else:
             self.log_success(f"Found ENV VAR: TEST. Value: {value}")
 
-        return '\n'.join(value)
+        return value
